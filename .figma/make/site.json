@@ -1,0 +1,10 @@
+{
+  "description": "A responsive portfolio showcasing projects with fully functional buttons, optimized for all device sizes to enhance user engagement and accessibility.",
+  "robots": {
+    "index": true
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
