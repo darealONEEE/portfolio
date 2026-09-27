@@ -79,21 +79,13 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         <div
           tabIndex={0}
           role="region"
-          aria-label="Project description"
-          className="project-modal-content min-h-0 overflow-y-auto overscroll-contain"
+          aria-label="Project image and details"
+          className="project-modal-content grid min-h-0 flex-1 grid-cols-2 overscroll-contain"
         >
-          <div className="grid md:grid-cols-[1.05fr_1fr]">
-            <div className="flex items-center justify-center bg-[#e9e9e9] p-5 sm:p-8 md:border-r md:border-black/15">
-              <img
-                src={project.image}
-                alt={project.imageAlt}
-                className="max-h-[40dvh] w-full rounded-[10px] object-contain md:max-h-[65dvh]"
-              />
-            </div>
-
-            <div className="p-6 sm:p-8 lg:p-10">
+          <div className="min-h-0 overflow-y-auto overscroll-contain border-r border-black/15">
+            <div className="p-3 sm:p-5 lg:p-8">
               <p className="text-sm font-medium text-[#555]">{project.format}</p>
-              <h2 id="project-detail-title" className="mt-3 text-[36px] font-normal leading-[1.08] tracking-tight sm:text-[44px] lg:text-[52px]">
+              <h2 id="project-detail-title" className="mt-3 text-2xl font-normal leading-[1.08] tracking-tight sm:text-3xl lg:text-[44px]">
                 {project.title}
               </h2>
               <p id="project-detail-summary" className="mt-6 text-[15px] leading-relaxed">
@@ -110,6 +102,10 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 </ul>
               </div>
             </div>
+          </div>
+
+          <div className="min-h-0 overflow-y-auto overscroll-contain bg-[#e9e9e9]">
+            <img src={project.image} alt={project.imageAlt} className="block h-auto w-full" />
           </div>
         </div>
       </div>
