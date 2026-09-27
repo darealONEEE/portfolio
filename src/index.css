@@ -4,3 +4,306 @@
 @theme {
   --font-sans: 'DM Sans', sans-serif;
 }
+
+.portfolio {
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.portfolio :is(button, a):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 5px;
+}
+
+.nav-link {
+  position: relative;
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 -5px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms var(--motion-ease);
+}
+
+.nav-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.motion-button {
+  transition: translate 220ms var(--motion-ease), box-shadow 220ms ease, background-color 180ms ease;
+}
+
+.social-link {
+  background-color: #222;
+  transition: translate 220ms var(--motion-ease), background-color 180ms ease, border-color 180ms ease;
+}
+
+.social-link:focus-visible {
+  background-color: #3a3a3a;
+  border-color: #fff;
+}
+
+.button-icon,
+.scroll-button [data-name='Scroll Down Icon'] {
+  transform-origin: center;
+  transition: transform 220ms var(--motion-ease);
+}
+
+.scroll-button > div {
+  transition: background-color 180ms ease;
+}
+
+.menu-toggle span {
+  transform-origin: center;
+  transition: transform 220ms var(--motion-ease), opacity 180ms ease;
+}
+
+.menu-toggle[aria-expanded='true'] span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.menu-toggle[aria-expanded='true'] span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle[aria-expanded='true'] span:nth-child(3) {
+  width: 24px;
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.mobile-nav-link {
+  transition: background-color 180ms ease;
+}
+
+.project-tab {
+  border-radius: 6px;
+  transition: background-color 180ms ease;
+}
+
+.tab-underline {
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 240ms var(--motion-ease), opacity 180ms ease;
+}
+
+.project-tab[aria-pressed='true'] .tab-underline {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.project-track {
+  transition: transform 460ms var(--motion-ease);
+}
+
+.project-image img {
+  transition: transform 450ms var(--motion-ease);
+}
+
+.portfolio .project-image:focus-visible {
+  outline: 3px solid #222;
+  outline-offset: -3px;
+}
+
+.project-image:focus-visible::after {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 2px solid #fff;
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+.project-image-caption {
+  transition: opacity 200ms ease, transform 250ms var(--motion-ease);
+}
+
+.project-modal::backdrop {
+  background: rgb(0 0 0 / 65%);
+}
+
+.project-modal-close {
+  cursor: pointer;
+}
+
+.project-modal-content:focus-visible {
+  outline: 2px solid #222;
+  outline-offset: -4px;
+}
+
+.skill-circle {
+  --circle-tilt: -6deg;
+  transition: transform 320ms var(--motion-ease);
+}
+
+.skill-circle-reverse {
+  --circle-tilt: 6deg;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+
+  .motion-button:hover {
+    translate: 0 -3px;
+    box-shadow: 0 6px 14px -7px rgb(0 0 0 / 28%);
+  }
+
+  .social-link:hover {
+    translate: 0 -2px;
+    background-color: #3a3a3a;
+    border-color: #fff;
+  }
+
+  .motion-button:hover .button-icon,
+  .scroll-button:hover [data-name='Scroll Down Icon'] {
+    transform: rotate(45deg);
+  }
+
+  .scroll-button:hover > div {
+    background-color: #dedede;
+  }
+
+  .project-tab:hover {
+    background-color: #f0f0f0;
+  }
+
+  .project-image:hover img {
+    transform: scale(1.035);
+  }
+
+  .project-image-caption {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .project-image:hover .project-image-caption,
+  .project-image:focus-visible .project-image-caption {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .skill-circle:hover {
+    transform: rotate(var(--circle-tilt));
+  }
+}
+
+.motion-button:active {
+  translate: 0 0;
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  [data-reveal] {
+    transition: opacity 600ms var(--motion-ease), transform 600ms var(--motion-ease);
+  }
+
+  [data-reveal][data-reveal-state='pending'] {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  [data-reveal='fade'][data-reveal-state='pending'] {
+    transform: none;
+  }
+
+  [data-reveal]:focus-within {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hero-intro {
+    animation: enter-up 650ms var(--motion-ease) 80ms backwards;
+  }
+
+  .hero-art {
+    animation: enter-art 850ms var(--motion-ease) 160ms backwards;
+  }
+
+  .hero-scroll {
+    animation: enter-up 550ms var(--motion-ease) 240ms backwards;
+  }
+
+  .mobile-navigation {
+    animation: enter-menu 200ms var(--motion-ease);
+  }
+
+  .project-modal[open] {
+    animation: enter-up 240ms var(--motion-ease);
+  }
+}
+
+@keyframes enter-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes enter-art {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(1.015);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes enter-menu {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .portfolio *,
+  .portfolio *::before,
+  .portfolio *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .motion-button:hover,
+  .motion-button:active,
+  .social-link:hover {
+    translate: none;
+  }
+
+  .motion-button:hover .button-icon,
+  .scroll-button:hover [data-name='Scroll Down Icon'],
+  .project-image:hover img,
+  .skill-circle:hover {
+    transform: none;
+  }
+
+  .project-image-caption {
+    transform: none;
+  }
+}
