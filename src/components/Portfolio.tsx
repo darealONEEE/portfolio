@@ -557,7 +557,7 @@ function PortfolioSection({ sectionRef }: { sectionRef: React.RefObject<HTMLElem
                         <div className="inline-flex items-center bg-[#222] text-white text-[10px] rounded-[5px] px-2 h-[15px] mb-1.5">{cert.year}</div>
                         <div className="flex flex-wrap items-baseline gap-x-1 text-[10px]">
                           <span className="font-medium">{cert.name}</span>
-                          {cert.source && <span className="font-medium text-black/70"> —  {cert.source}</span>}
+                          {cert.source && <span className="font-semibold text-black"> —  {cert.source}</span>}
                         </div>
                         <p className="text-[10px] font-light leading-[12px] mt-1.5 w-[260px] max-w-full">{cert.desc}</p>
                       </div>
@@ -574,7 +574,7 @@ function PortfolioSection({ sectionRef }: { sectionRef: React.RefObject<HTMLElem
                         <div className="inline-flex items-center bg-[#222] text-white text-[10px] rounded-[5px] px-2 h-[15px] mb-1.5">{cert.year}</div>
                         <div className="flex flex-wrap items-baseline gap-x-1 text-[10px]">
                           <span className="font-medium">{cert.name}</span>
-                          {cert.source && <span className="font-medium text-black/70"> —  {cert.source}</span>}
+                          {cert.source && <span className="font-semibold text-black"> —  {cert.source}</span>}
                         </div>
                         <p className="text-[10px] font-light leading-[12px] mt-1.5 w-[260px] max-w-full">{cert.desc}</p>
                       </div>
