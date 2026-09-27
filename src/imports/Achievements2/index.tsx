@@ -4,7 +4,7 @@ function Description() {
   return (
     <div className="[word-break:break-word] absolute contents leading-[26px] left-[17px] not-italic text-[#fefefe] top-[278px]" data-name="Description">
       <p className="absolute left-1/2 top-[278px] w-[358px] max-w-[calc(100%-34px)] -translate-x-1/2 break-words text-center font-['Aeonik:Medium',sans-serif] text-[clamp(16px,6vw,24px)] leading-tight">Gawad Unceano</p>
-      <p className="absolute left-[17px] top-[304px] w-[358px] max-w-[calc(100%-34px)] break-words font-light text-[clamp(9px,calc(4vw-2px),14px)] leading-[1.35]">Receiving the Gawad Unceano was a significant milestone that recognized my academic dedication and technical excellence during my university years.</p>
+      <p className="absolute left-[17px] top-[304px] w-[358px] max-w-[calc(100%-34px)] break-words font-light text-[clamp(9px,calc(4vw_-_2px),14px)] leading-[1.35]">Receiving the Gawad Unceano was a significant milestone that recognized my academic dedication and technical excellence during my university years.</p>
     </div>
   );
 }
