@@ -4,7 +4,7 @@ function Description() {
   return (
     <div className="[word-break:break-word] absolute contents leading-[26px] left-[17px] not-italic text-[#fefefe] top-[278px]" data-name="Description">
       <p className="absolute left-[17px] top-[278px] w-[358px] max-w-[calc(100%-34px)] break-words font-['Aeonik:Medium',sans-serif] text-[clamp(16px,6vw,24px)] leading-tight">Idea2StartUp Participant</p>
-      <p className="absolute left-[17px] top-[304px] w-[358px] max-w-[calc(100%-34px)] break-words font-light text-[clamp(11px,4vw,16px)] leading-[1.35]">Participating in the Idea2Startup + Bloomberg Challenge allowed me to apply my software and IT skills to solve critical real-world problems.</p>
+      <p className="absolute left-[17px] top-[304px] w-[358px] max-w-[calc(100%-34px)] break-words font-light text-[clamp(9px,calc(4vw-2px),14px)] leading-[1.35]">Participating in the Idea2Startup + Bloomberg Challenge allowed me to apply my software and IT skills to solve critical real-world problems.</p>
     </div>
   );
 }
