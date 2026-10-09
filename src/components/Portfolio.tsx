@@ -16,6 +16,7 @@ import svgPaths from "@/imports/Overall/svg-l2at3kw3qv";
 import servicesSvg from "@/imports/ServicesIcon/svg-4ovmw8q218";
 import portfolioSvg from "@/imports/Portfolio/svg-jzldnlquad";
 import imgPics1 from "@/imports/Overall/6a87301f7abfa1072689e561b8acc4514b486af1.png";
+import imgFormalPortrait from "@/imports/Overall/formal-portrait.png";
 import imgRectangle20 from "@/imports/Portfolio-1/ffdc2ed176ba73021cacbfa5f3dc43ab454b978b.png";
 import imgRectangle21 from "@/imports/Portfolio-1/f0d0802b14bbd438b97bb800109e41559ae74a73.png";
 import imgRectangle22 from "@/imports/Portfolio-1/1846e9b576b1a7f910101233db383075696e229b.png";
@@ -28,22 +29,6 @@ function scrollToSection(section: HTMLElement | null | undefined) {
   section?.scrollIntoView({
     behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
   });
-}
-
-function LogoIcon({ className }: { className?: string }) {
-  return (
-    <div className={className || "h-[52px] w-[63px]"}>
-      <svg className="block size-full" fill="none" viewBox="0 0 63 52.3959">
-        <g>
-          <path d={svgPaths.p39fc8400} fill="#1B1B1B" />
-          <path d={svgPaths.p2f623080} fill="#7B7B7B" />
-          <path d={svgPaths.p1583ce00} fill="#7B7B7B" />
-          <path d={svgPaths.pe718300} fill="#7B7B7B" />
-          <ellipse cx="42.199" cy="29.5415" fill="#1B1B1B" rx="9.87043" ry="9.47559" />
-        </g>
-      </svg>
-    </div>
-  );
 }
 
 function LogoIconLight({ className }: { className?: string }) {
@@ -62,7 +47,31 @@ function LogoIconLight({ className }: { className?: string }) {
   );
 }
 
-function Nav({ dark = false, onNavClick }: { dark?: boolean; onNavClick?: (section: string) => void }) {
+function LogoIconDark({ className }: { className?: string }) {
+  return (
+    <div className={className || "h-[52px] w-[63px]"}>
+      <svg className="block size-full" fill="none" viewBox="0 0 63 52.3959">
+        <g>
+          <path d={svgPaths.p39fc8400} fill="#f5f5f5" />
+          <path d={svgPaths.p2f623080} fill="#424242" />
+          <path d={svgPaths.p1583ce00} fill="#424242" />
+          <path d={svgPaths.pe718300} fill="#424242" />
+          <ellipse cx="42.199" cy="29.5415" fill="#f5f5f5" rx="9.87043" ry="9.47559" />
+        </g>
+      </svg>
+    </div>
+  );
+}
+
+function Nav({
+  dark = false,
+  onNavClick,
+  onThemeToggle,
+}: {
+  dark?: boolean;
+  onNavClick?: (section: string) => void;
+  onThemeToggle: () => void;
+}) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const textColor = dark ? "text-white" : "text-black";
@@ -78,7 +87,18 @@ function Nav({ dark = false, onNavClick }: { dark?: boolean; onNavClick?: (secti
       }}
     >
       <div className="flex items-center gap-6 lg:gap-8">
-        {dark ? <LogoIconLight className="h-10 w-12 shrink-0" /> : <LogoIcon className="h-10 w-12 shrink-0" />}
+        <button
+          type="button"
+          aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+          aria-pressed={dark}
+          title={dark ? "Switch to light mode" : "Switch to dark mode"}
+          onClick={onThemeToggle}
+          className="flex min-h-11 min-w-11 items-center justify-center rounded-md cursor-pointer"
+        >
+          {dark
+            ? <LogoIconDark className="h-10 w-12 shrink-0" />
+            : <LogoIconLight className="h-10 w-12 shrink-0" />}
+        </button>
         <div className="hidden md:flex items-center gap-6 lg:gap-8">
           {links.map((link) => (
             <button
@@ -122,7 +142,7 @@ function Nav({ dark = false, onNavClick }: { dark?: boolean; onNavClick?: (secti
         </button>
       </div>
       {menuOpen && (
-        <div id="mobile-navigation" className="mobile-navigation absolute left-0 right-0 top-full z-50 rounded-2xl bg-white p-4 shadow-xl md:hidden">
+        <div id="mobile-navigation" className="mobile-navigation absolute left-0 right-0 top-full z-50 rounded-2xl bg-[var(--page-bg)] p-4 shadow-xl md:hidden">
           <div className="flex flex-col gap-1">
             {links.map((link) => (
               <button
@@ -132,7 +152,7 @@ function Nav({ dark = false, onNavClick }: { dark?: boolean; onNavClick?: (secti
                   onNavClick?.(link);
                   setMenuOpen(false);
                 }}
-                className="mobile-nav-link rounded-lg px-3 py-3 text-left text-[15px] hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                className="mobile-nav-link rounded-lg px-3 py-3 text-left text-[15px] hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
               >
                 {link}
               </button>
@@ -142,7 +162,7 @@ function Nav({ dark = false, onNavClick }: { dark?: boolean; onNavClick?: (secti
               target="_blank"
               rel="noopener noreferrer"
               download="CV_-_DARYL_BO.pdf"
-              className="motion-button mt-2 flex items-center justify-between rounded-lg bg-[#e9e9e9] px-3 py-3 text-[15px] hover:bg-[#dedede]"
+              className="motion-button mt-2 flex items-center justify-between rounded-lg bg-[var(--control-bg)] px-3 py-3 text-[15px] hover:bg-[var(--control-hover)]"
             >
               <span>Download CV</span>
               <span className="button-icon inline-block" aria-hidden="true">↓</span>
@@ -154,13 +174,21 @@ function Nav({ dark = false, onNavClick }: { dark?: boolean; onNavClick?: (secti
   );
 }
 
-function HeroSection({ refs }: { refs: Record<string, React.RefObject<HTMLElement | null>> }) {
+function HeroSection({
+  refs,
+  darkMode,
+  onThemeToggle,
+}: {
+  refs: Record<string, React.RefObject<HTMLElement | null>>;
+  darkMode: boolean;
+  onThemeToggle: () => void;
+}) {
   const handleScrollDown = () => {
     scrollToSection(refs["About Me"]?.current);
   };
 
   return (
-    <section className="relative bg-white overflow-hidden min-h-[600px] lg:min-h-screen">
+    <section className="theme-page relative overflow-hidden min-h-[600px] lg:min-h-screen">
       {/* Decorative circles top-right */}
       <div className="hero-art hidden md:block absolute right-0 top-0 w-[42%] h-[68%] pointer-events-none lg:w-[55%] lg:h-full">
         <div className="absolute inset-0">
@@ -175,15 +203,19 @@ function HeroSection({ refs }: { refs: Record<string, React.RefObject<HTMLElemen
           </svg>
         </div>
         <div className="absolute inset-0 overflow-hidden">
-          <img src={imgPics1} alt="Daryl Bo" className="absolute bottom-0 right-0 h-[72%] w-[78%] object-contain object-bottom lg:h-[88%]" />
+          <img src={darkMode ? imgFormalPortrait : imgPics1} alt="Daryl Bo" className="absolute bottom-0 right-0 h-[72%] w-[78%] object-contain object-bottom lg:h-[88%]" />
         </div>
       </div>
 
       {/* Content */}
       <div className="relative z-10 px-6 md:pr-10 lg:px-0 lg:pl-[8%] lg:pr-10 pt-4 pb-16 lg:pb-0 lg:min-h-screen flex flex-col">
-        <Nav onNavClick={(s) => {
-          scrollToSection(refs[s]?.current);
-        }} />
+        <Nav
+          dark={darkMode}
+          onThemeToggle={onThemeToggle}
+          onNavClick={(s) => {
+            scrollToSection(refs[s]?.current);
+          }}
+        />
 
         {/* Stats */}
         <div className="flex gap-8 mt-8 lg:mt-16">
@@ -217,7 +249,7 @@ function HeroSection({ refs }: { refs: Record<string, React.RefObject<HTMLElemen
 
 function AboutMeSection({ sectionRef }: { sectionRef: React.RefObject<HTMLElement | null> }) {
   return (
-    <section ref={sectionRef as React.RefObject<HTMLElement>} className="relative bg-[#d6d6d6] overflow-hidden py-16 lg:py-24">
+    <section ref={sectionRef as React.RefObject<HTMLElement>} className="theme-muted relative overflow-hidden py-16 lg:py-24">
       <div className="max-w-[1300px] mx-auto px-6 md:px-10">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:gap-16 xl:gap-24">
@@ -276,7 +308,7 @@ function AboutMeSection({ sectionRef }: { sectionRef: React.RefObject<HTMLElemen
               <div key={edu.period} data-reveal className="flex flex-col text-center">
                 <p className="text-[13px] font-light">{edu.period}</p>
                 <p className="text-[14px] font-bold mt-1 leading-snug">{edu.title}</p>
-                <p className="text-[12px] font-medium mt-1 leading-relaxed text-[#333]">{edu.school}</p>
+                <p className="text-[12px] font-medium mt-1 leading-relaxed text-[var(--text-muted)]">{edu.school}</p>
                 <p className="text-[12px] font-light mt-2 leading-relaxed text-justify">{edu.desc}</p>
               </div>
             ))}
@@ -284,7 +316,7 @@ function AboutMeSection({ sectionRef }: { sectionRef: React.RefObject<HTMLElemen
         </div></div>
 
         {/* Divider */}
-        <div className="h-px bg-black/20 mt-10 lg:mt-14" />
+        <div className="theme-divider h-px mt-10 lg:mt-14" />
 
         {/* Skills circles */}
         <div data-reveal="fade" className="mt-10 lg:mt-16 flex items-center justify-end">
@@ -330,7 +362,7 @@ function ServicesSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
   ];
 
   return (
-    <section ref={sectionRef as React.RefObject<HTMLElement>} className="relative bg-[#d6d6d6] overflow-hidden border-t border-black/10">
+    <section ref={sectionRef as React.RefObject<HTMLElement>} className="theme-muted relative overflow-hidden border-t border-black/10">
       <div className="flex flex-col lg:flex-row min-h-[600px] lg:min-h-screen">
 
         {/* LEFT — logo + Services title */}
@@ -396,7 +428,7 @@ function ProjectsSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
   const slideIndex = { DESIGN: 0, DEVELOP: 1, MULTIMEDIA: 2 }[activeTab];
 
   return (
-    <section ref={sectionRef as React.RefObject<HTMLElement>} className="relative bg-white overflow-hidden pt-16 pb-24 lg:pt-20 lg:pb-32">
+    <section ref={sectionRef as React.RefObject<HTMLElement>} className="theme-page relative overflow-hidden pt-16 pb-24 lg:pt-20 lg:pb-32">
       {/* Decorative orbit circle — top-right */}
       <div className="absolute -top-20 right-0 w-[280px] h-[280px] sm:w-[340px] sm:h-[340px] lg:w-[400px] lg:h-[400px] pointer-events-none rotate-[6.87deg]">
         <Group271 />
@@ -422,17 +454,17 @@ function ProjectsSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
                 aria-pressed={isActive}
                 aria-controls="project-gallery"
                 onClick={() => setActiveTab(tab.value)}
-                className="project-tab cursor-pointer flex flex-col items-center h-11 w-[88px] sm:w-[100px] justify-center gap-[2px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black"
+                className="project-tab cursor-pointer flex flex-col items-center h-11 w-[88px] sm:w-[100px] justify-center gap-[2px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current"
               >
-                <span className={`text-[15px] font-normal leading-[18px] ${isActive ? "text-[#626262]" : "text-black"}`}>
+                <span className={`text-[15px] font-normal leading-[18px] ${isActive ? "text-[var(--text-muted)]" : "text-[var(--text-primary)]"}`}>
                   {tab.label}
                 </span>
                 <div
-                  className="tab-underline h-1"
+                  className="tab-underline h-1 text-[var(--text-muted)]"
                   aria-hidden="true"
                 >
                   <svg fill="none" height="2" viewBox={`0 0 ${tab.underlineW} 2`} width={tab.underlineW}>
-                    <line stroke="#626262" strokeWidth="2" x2={tab.underlineW} y1="1" y2="1" />
+                    <line stroke="currentColor" strokeWidth="2" x2={tab.underlineW} y1="1" y2="1" />
                   </svg>
                 </div>
               </button>
@@ -526,7 +558,7 @@ const achievements = [
 
 function PortfolioSection({ sectionRef }: { sectionRef: React.RefObject<HTMLElement | null> }) {
   return (
-    <section ref={sectionRef as React.RefObject<HTMLElement>} className="relative bg-white overflow-hidden pb-20 lg:pb-28">
+    <section ref={sectionRef as React.RefObject<HTMLElement>} className="theme-page relative overflow-hidden pb-20 lg:pb-28">
       <div className="max-w-[1300px] mx-auto px-6 md:px-10">
         {/* Two-column header: bp logo + "Portfolio" title left | description + certificates right */}
         <div className="flex flex-col lg:flex-row lg:items-start">
@@ -551,13 +583,13 @@ function PortfolioSection({ sectionRef }: { sectionRef: React.RefObject<HTMLElem
                   {[certificates[0], certificates[2]].map((cert, i) => (
                     <div key={i} className="flex gap-3">
                       <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="shrink-0 mt-[3px]">
-                        <circle cx="5" cy="5" r="5" fill="#222" />
+                        <circle cx="5" cy="5" r="5" fill="currentColor" />
                       </svg>
                       <div className="flex-1">
                         <div className="inline-flex items-center bg-[#222] text-white text-[10px] rounded-[5px] px-2 h-[15px] mb-1.5">{cert.year}</div>
                         <div className="flex flex-wrap items-baseline gap-x-1 text-[10px]">
                           <span className="font-medium">{cert.name}</span>
-                          {cert.source && <span className="font-semibold text-black"> —  {cert.source}</span>}
+                          {cert.source && <span className="font-semibold text-[var(--text-primary)]"> —  {cert.source}</span>}
                         </div>
                         <p className="text-[10px] font-light leading-[12px] mt-1.5 w-[260px] max-w-full">{cert.desc}</p>
                       </div>
@@ -568,13 +600,13 @@ function PortfolioSection({ sectionRef }: { sectionRef: React.RefObject<HTMLElem
                   {[certificates[1], certificates[3]].map((cert, i) => (
                     <div key={i} className="flex gap-3">
                       <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="shrink-0 mt-[3px]">
-                        <circle cx="5" cy="5" r="5" fill="#222" />
+                        <circle cx="5" cy="5" r="5" fill="currentColor" />
                       </svg>
                       <div className="flex-1">
                         <div className="inline-flex items-center bg-[#222] text-white text-[10px] rounded-[5px] px-2 h-[15px] mb-1.5">{cert.year}</div>
                         <div className="flex flex-wrap items-baseline gap-x-1 text-[10px]">
                           <span className="font-medium">{cert.name}</span>
-                          {cert.source && <span className="font-semibold text-black"> —  {cert.source}</span>}
+                          {cert.source && <span className="font-semibold text-[var(--text-primary)]"> —  {cert.source}</span>}
                         </div>
                         <p className="text-[10px] font-light leading-[12px] mt-1.5 w-[260px] max-w-full">{cert.desc}</p>
                       </div>
@@ -614,16 +646,16 @@ function PortfolioSection({ sectionRef }: { sectionRef: React.RefObject<HTMLElem
 
 function ConclusionSection() {
   return (
-    <section className="bg-white py-16 lg:py-24 flex flex-col items-center text-center px-6">
+    <section className="theme-page py-16 lg:py-24 flex flex-col items-center text-center px-6">
       <h2 data-reveal className="text-[28px] sm:text-[36px] lg:text-[48px] font-medium leading-snug max-w-3xl">
         Have an idea? Let's turn it into a digital reality.
       </h2>
-      <p className="mt-4 text-[15px] lg:text-[18px] font-normal text-[#333] max-w-2xl leading-relaxed">
+      <p className="mt-4 text-[15px] lg:text-[18px] font-normal text-[var(--text-muted)] max-w-2xl leading-relaxed">
         I am always eager to collaborate on fresh ideas and tackle exciting design or technical challenges. I can't wait to partner with you and bring your next big project to life!
       </p>
       <a
         href="mailto:imda.realadrian0929@gmail.com"
-        className="motion-button mt-8 flex items-center gap-2 bg-[#e9e9e9] hover:bg-[#dedede] rounded-full px-6 py-3 cursor-pointer"
+        className="motion-button mt-8 flex items-center gap-2 bg-[var(--control-bg)] hover:bg-[var(--control-hover)] rounded-full px-6 py-3 cursor-pointer"
       >
         <span className="text-[15px] font-light">Contact Me</span>
         <div className="button-icon w-6 h-6 rounded-full bg-[#222] flex items-center justify-center shrink-0">
@@ -676,6 +708,7 @@ function FooterSection({ onNavClick }: { onNavClick?: (section: string) => void 
 
 export default function Portfolio() {
   const motionRef = useScrollReveal();
+  const [darkMode, setDarkMode] = useState(false);
   const refs: Record<string, React.RefObject<HTMLElement | null>> = {
     "About Me": useRef<HTMLElement>(null),
     "Services": useRef<HTMLElement>(null),
@@ -688,8 +721,8 @@ export default function Portfolio() {
   };
 
   return (
-    <div ref={motionRef} className="portfolio min-h-screen font-sans">
-      <HeroSection refs={refs} />
+    <div ref={motionRef} className="portfolio min-h-screen font-sans" data-theme={darkMode ? "dark" : "light"}>
+      <HeroSection refs={refs} darkMode={darkMode} onThemeToggle={() => setDarkMode((current) => !current)} />
       <AboutMeSection sectionRef={refs["About Me"]} />
       <ServicesSection sectionRef={refs["Services"]} />
       <ProjectsSection sectionRef={refs["Projects"]} />
