@@ -204,6 +204,20 @@
   background: rgb(0 0 0 / 65%);
 }
 
+.certificate-modal::backdrop {
+  background: rgb(0 0 0 / 78%);
+}
+
+.certificate-card {
+  background-color: transparent;
+  transition: background-color 180ms ease, border-color 180ms ease, translate 220ms var(--motion-ease);
+}
+
+.certificate-card:active {
+  background-color: var(--control-bg);
+  translate: 0 1px;
+}
+
 .project-modal-close {
   cursor: pointer;
 }
@@ -253,6 +267,12 @@
 
   .project-image:hover img {
     transform: scale(1.035);
+  }
+
+  .certificate-card:hover {
+    background-color: var(--control-bg);
+    border-color: var(--text-muted);
+    translate: 0 -2px;
   }
 
   .project-image-caption {
@@ -316,7 +336,8 @@
     animation: enter-menu 200ms var(--motion-ease);
   }
 
-  .project-modal[open] {
+  .project-modal[open],
+  .certificate-modal[open] {
     animation: enter-up 240ms var(--motion-ease);
   }
 }
@@ -368,7 +389,9 @@
 
   .motion-button:hover,
   .motion-button:active,
-  .social-link:hover {
+  .social-link:hover,
+  .certificate-card:hover,
+  .certificate-card:active {
     translate: none;
   }
 

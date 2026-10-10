@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import useScrollReveal from "@/hooks/useScrollReveal";
 import SocialLinks from "@/components/SocialLinks";
 import ProjectModal from "@/components/ProjectModal";
+import CertificateModal, { type Certificate } from "@/components/CertificateModal";
 import { designProjects, developProjects, multimediaProjects, type Project } from "@/data/projects";
 import cvPdf from "@/imports/CV_-_DARYL_BO.pdf";
 import ScrollDown1 from "@/imports/ScrollDown/index";
@@ -20,6 +21,10 @@ import imgFormalPortrait from "@/imports/Overall/formal-portrait.png";
 import imgRectangle20 from "@/imports/Portfolio-1/ffdc2ed176ba73021cacbfa5f3dc43ab454b978b.png";
 import imgRectangle21 from "@/imports/Portfolio-1/f0d0802b14bbd438b97bb800109e41559ae74a73.png";
 import imgRectangle22 from "@/imports/Portfolio-1/1846e9b576b1a7f910101233db383075696e229b.png";
+import gitForTeamsCertificate from "@/assets/certificates/git-for-teams.png";
+import javaScriptEssentialsCertificate from "@/assets/certificates/javascript-essentials.jpg";
+import ccnaIntroductionCertificate from "@/assets/certificates/ccna-introduction-to-networks.jpg";
+import networkingDevicesCertificate from "@/assets/certificates/networking-devices.jpg";
 
 type ProjectTab = "DESIGN" | "DEVELOP" | "MULTIMEDIA";
 
@@ -511,30 +516,38 @@ function ProjectsSection({ sectionRef }: { sectionRef: React.RefObject<HTMLEleme
   );
 }
 
-const certificates = [
+const certificates: Certificate[] = [
   {
     year: "2026",
     name: "Git for Teams",
     source: "LinkedIn",
     desc: "We learned how to use Git commands to ensure a version control to our system and to make sure all team members have access to the project.",
+    image: gitForTeamsCertificate,
+    imageAlt: "Git for Teams LinkedIn Learning certificate awarded to Daryl Adrian Bo",
   },
   {
     year: "2025",
     name: "CCNA Introduction to Networks",
     source: "LinkedIn",
     desc: "Here we build our networking skills and get ready for CCNA certification and associate level jobs.",
+    image: ccnaIntroductionCertificate,
+    imageAlt: "CCNA Introduction to Networks certificate awarded to Bo Daryladrianjatulan",
   },
   {
     year: "2025",
     name: "JavaScript Essentials",
     source: "CCNA & CCNP",
     desc: "Design, Develop, and improve JavaScript programs. Boost our programming skills to start our career in technology.",
+    image: javaScriptEssentialsCertificate,
+    imageAlt: "JavaScript Essentials 1 certificate awarded to Bo Daryladrianjatulan",
   },
   {
     year: "2024",
     name: "Networking Devices and Initial Configuration",
     source: "",
     desc: "For network essentials and build our foundational skills on network engineering.",
+    image: networkingDevicesCertificate,
+    imageAlt: "Networking Devices and Initial Configuration certificate awarded to Bo Daryladrianjatulan",
   },
 ];
 
@@ -557,6 +570,8 @@ const achievements = [
 ];
 
 function PortfolioSection({ sectionRef }: { sectionRef: React.RefObject<HTMLElement | null> }) {
+  const [selectedCertificate, setSelectedCertificate] = useState<Certificate | null>(null);
+
   return (
     <section ref={sectionRef as React.RefObject<HTMLElement>} className="theme-page relative overflow-hidden pb-20 lg:pb-28">
       <div className="max-w-[1300px] mx-auto px-6 md:px-10">
@@ -581,8 +596,15 @@ function PortfolioSection({ sectionRef }: { sectionRef: React.RefObject<HTMLElem
               <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-black/10">
                 <div className="flex flex-col gap-6 sm:pr-8 pb-6 sm:pb-0">
                   {[certificates[0], certificates[2]].map((cert, i) => (
-                    <div key={i} className="flex gap-3">
-                      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="shrink-0 mt-[3px]">
+                    <button
+                      key={i}
+                      type="button"
+                      aria-haspopup="dialog"
+                      aria-label={`View ${cert.name} certificate`}
+                      onClick={() => setSelectedCertificate(cert)}
+                      className="certificate-card flex min-h-11 w-full cursor-pointer gap-3 rounded-[8px] border border-[#7b7b7b] p-3 text-left"
+                    >
+                      <svg aria-hidden="true" width="10" height="10" viewBox="0 0 10 10" fill="none" className="shrink-0 mt-[3px]">
                         <circle cx="5" cy="5" r="5" fill="currentColor" />
                       </svg>
                       <div className="flex-1">
@@ -592,14 +614,22 @@ function PortfolioSection({ sectionRef }: { sectionRef: React.RefObject<HTMLElem
                           {cert.source && <span className="font-semibold text-[var(--text-primary)]"> —  {cert.source}</span>}
                         </div>
                         <p className="text-[10px] font-light leading-[12px] mt-1.5 w-[260px] max-w-full">{cert.desc}</p>
+                        <span className="mt-2 inline-block text-[10px] font-medium underline underline-offset-2">View certificate</span>
                       </div>
-                    </div>
+                    </button>
                   ))}
                 </div>
                 <div className="flex flex-col gap-6 sm:pl-8 pt-6 sm:pt-0">
                   {[certificates[1], certificates[3]].map((cert, i) => (
-                    <div key={i} className="flex gap-3">
-                      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" className="shrink-0 mt-[3px]">
+                    <button
+                      key={i}
+                      type="button"
+                      aria-haspopup="dialog"
+                      aria-label={`View ${cert.name} certificate`}
+                      onClick={() => setSelectedCertificate(cert)}
+                      className="certificate-card flex min-h-11 w-full cursor-pointer gap-3 rounded-[8px] border border-[#7b7b7b] p-3 text-left"
+                    >
+                      <svg aria-hidden="true" width="10" height="10" viewBox="0 0 10 10" fill="none" className="shrink-0 mt-[3px]">
                         <circle cx="5" cy="5" r="5" fill="currentColor" />
                       </svg>
                       <div className="flex-1">
@@ -609,8 +639,9 @@ function PortfolioSection({ sectionRef }: { sectionRef: React.RefObject<HTMLElem
                           {cert.source && <span className="font-semibold text-[var(--text-primary)]"> —  {cert.source}</span>}
                         </div>
                         <p className="text-[10px] font-light leading-[12px] mt-1.5 w-[260px] max-w-full">{cert.desc}</p>
+                        <span className="mt-2 inline-block text-[10px] font-medium underline underline-offset-2">View certificate</span>
                       </div>
-                    </div>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -640,6 +671,12 @@ function PortfolioSection({ sectionRef }: { sectionRef: React.RefObject<HTMLElem
           </div>
         </div>
       </div>
+      {selectedCertificate && (
+        <CertificateModal
+          certificate={selectedCertificate}
+          onClose={() => setSelectedCertificate(null)}
+        />
+      )}
     </section>
   );
 }
