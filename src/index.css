@@ -53,6 +53,10 @@
   color: var(--text-primary);
 }
 
+.portfolio[data-theme="dark"] .cv-modal {
+  border-color: #494949;
+}
+
 .portfolio[data-theme="dark"] .project-modal header,
 .portfolio[data-theme="dark"] .project-modal-content > div:first-child,
 .portfolio[data-theme="dark"] .project-modal-content > div:first-child > div > div {
@@ -204,6 +208,10 @@
   background: rgb(0 0 0 / 65%);
 }
 
+.cv-modal::backdrop {
+  background: rgb(0 0 0 / 72%);
+}
+
 .certificate-modal::backdrop {
   background: rgb(0 0 0 / 78%);
 }
@@ -337,6 +345,7 @@
   }
 
   .project-modal[open],
+  .cv-modal[open],
   .certificate-modal[open] {
     animation: enter-up 240ms var(--motion-ease);
   }
