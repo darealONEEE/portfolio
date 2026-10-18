@@ -3,8 +3,8 @@ import useScrollReveal from "@/hooks/useScrollReveal";
 import SocialLinks from "@/components/SocialLinks";
 import ProjectModal from "@/components/ProjectModal";
 import CertificateModal, { type Certificate } from "@/components/CertificateModal";
+import CvModal from "@/components/CvModal";
 import { designProjects, developProjects, multimediaProjects, type Project } from "@/data/projects";
-import cvPdf from "@/imports/CV_-_DARYL_BO.pdf";
 import ScrollDown1 from "@/imports/ScrollDown/index";
 import Achievements1 from "@/imports/Achievements1/index";
 import Achievements2 from "@/imports/Achievements2/index";
@@ -72,10 +72,12 @@ function Nav({
   dark = false,
   onNavClick,
   onThemeToggle,
+  onViewCv,
 }: {
   dark?: boolean;
   onNavClick?: (section: string) => void;
   onThemeToggle: () => void;
+  onViewCv: () => void;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -117,21 +119,20 @@ function Nav({
         </div>
       </div>
       <div className="flex items-center gap-3">
-        <a
-          href={cvPdf}
-          target="_blank"
-          rel="noopener noreferrer"
-          download="CV_-_DARYL_BO.pdf"
+        <button
+          type="button"
+          onClick={onViewCv}
           className={`motion-button hidden md:flex items-center gap-2 py-3 rounded-full text-[15px] font-light ${dark ? "bg-[#333] text-white hover:bg-[#444]" : "bg-[#e9e9e9] text-black hover:bg-[#dedede]"}`}
           style={{ paddingLeft: 70, paddingRight: 70, paddingTop: 12, paddingBottom: 12 }}
         >
-          <span>CV</span>
+          <span>View CV</span>
           <div className="button-icon w-5 h-5 rounded-full bg-[#222] flex items-center justify-center shrink-0">
-            <svg width="10" height="10" viewBox="0 0 13.2929 15.5623" fill="none">
-              <path d={svgPaths.p364ef080} fill="#DEDEDE" />
+            <svg width="13" height="10" viewBox="0 0 18 12" fill="none" aria-hidden="true">
+              <path d="M1 6s2.5-4.5 8-4.5S17 6 17 6s-2.5 4.5-8 4.5S1 6 1 6Z" stroke="#DEDEDE" strokeWidth="1.4" />
+              <circle cx="9" cy="6" r="2" stroke="#DEDEDE" strokeWidth="1.4" />
             </svg>
           </div>
-        </a>
+        </button>
         <button
           ref={menuButtonRef}
           type="button"
@@ -162,16 +163,17 @@ function Nav({
                 {link}
               </button>
             ))}
-            <a
-              href={cvPdf}
-              target="_blank"
-              rel="noopener noreferrer"
-              download="CV_-_DARYL_BO.pdf"
-              className="motion-button mt-2 flex items-center justify-between rounded-lg bg-[var(--control-bg)] px-3 py-3 text-[15px] hover:bg-[var(--control-hover)]"
+            <button
+              type="button"
+              onClick={() => {
+                setMenuOpen(false);
+                onViewCv();
+              }}
+              className="motion-button mt-2 flex w-full items-center justify-between rounded-lg bg-[var(--control-bg)] px-3 py-3 text-left text-[15px] hover:bg-[var(--control-hover)]"
             >
-              <span>Download CV</span>
-              <span className="button-icon inline-block" aria-hidden="true">↓</span>
-            </a>
+              <span>View CV</span>
+              <span className="button-icon inline-block" aria-hidden="true">↗</span>
+            </button>
           </div>
         </div>
       )}
@@ -183,10 +185,12 @@ function HeroSection({
   refs,
   darkMode,
   onThemeToggle,
+  onViewCv,
 }: {
   refs: Record<string, React.RefObject<HTMLElement | null>>;
   darkMode: boolean;
   onThemeToggle: () => void;
+  onViewCv: () => void;
 }) {
   const handleScrollDown = () => {
     scrollToSection(refs["About Me"]?.current);
@@ -217,6 +221,7 @@ function HeroSection({
         <Nav
           dark={darkMode}
           onThemeToggle={onThemeToggle}
+          onViewCv={onViewCv}
           onNavClick={(s) => {
             scrollToSection(refs[s]?.current);
           }}
@@ -746,6 +751,7 @@ function FooterSection({ onNavClick }: { onNavClick?: (section: string) => void 
 export default function Portfolio() {
   const motionRef = useScrollReveal();
   const [darkMode, setDarkMode] = useState(false);
+  const [cvOpen, setCvOpen] = useState(false);
   const refs: Record<string, React.RefObject<HTMLElement | null>> = {
     "About Me": useRef<HTMLElement>(null),
     "Services": useRef<HTMLElement>(null),
@@ -759,13 +765,19 @@ export default function Portfolio() {
 
   return (
     <div ref={motionRef} className="portfolio min-h-screen font-sans" data-theme={darkMode ? "dark" : "light"}>
-      <HeroSection refs={refs} darkMode={darkMode} onThemeToggle={() => setDarkMode((current) => !current)} />
+      <HeroSection
+        refs={refs}
+        darkMode={darkMode}
+        onThemeToggle={() => setDarkMode((current) => !current)}
+        onViewCv={() => setCvOpen(true)}
+      />
       <AboutMeSection sectionRef={refs["About Me"]} />
       <ServicesSection sectionRef={refs["Services"]} />
       <ProjectsSection sectionRef={refs["Projects"]} />
       <PortfolioSection sectionRef={refs["Portfolio"]} />
       <ConclusionSection />
       <FooterSection onNavClick={handleNavClick} />
+      {cvOpen && <CvModal onClose={() => setCvOpen(false)} />}
     </div>
   );
 }
